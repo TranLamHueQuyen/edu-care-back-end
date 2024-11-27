@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: secret # Mật khẩu của user root
+      MYSQL_DATABASE: edu-care # Tên cơ sở dữ liệu mặc định khi khởi động
+      MYSQL_USER: root # Tên người dùng
+      MYSQL_PASSWORD: secret # Mật khẩu của user
+    ports:
+      - '3306:3306' # Mở cổng 3306 để kết nối từ bên ngoài
+    volumes:
+      - mysql_data:/var/lib/mysql # Sử dụng volume để lưu dữ liệu của MySQL
+    networks:
+      - mysql_network
+    restart: unless-stopped # Restart container nếu nó bị dừng
+
+volumes:
+  mysql_data: # Định nghĩa volume lưu trữ dữ liệu của MySQL
+
+networks:
+  mysql_network: # Định nghĩa mạng nếu cần thiết
+    driver: bridge
