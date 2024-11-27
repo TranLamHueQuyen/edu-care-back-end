@@ -20,5 +20,7 @@
     "paths": {
       "@/*": ["src/*"] // Cấu hình alias @ trỏ vào thư mục src
     }
-  }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

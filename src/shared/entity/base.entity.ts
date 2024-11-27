@@ -4,10 +4,10 @@ export abstract class EntityBase {
   @PrimaryGeneratedColumn()
   id: number
 
-  @CreateDateColumn({ type: 'timestamp', name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date
 
-  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at', default: () => 'CURRENT_TIMESTAMP' })
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date
 
   @Column({ type: 'boolean', default: false })
