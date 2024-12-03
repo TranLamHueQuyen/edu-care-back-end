@@ -20,9 +20,37 @@ export class Phq9QuestionsService {
     return 'This action adds a new phq9Question'
   }
 
-  findAll() {
-    return `This action returns all phq9Questions`
+  async findAll() {
+    // Lấy 9 câu hỏi ngẫu nhiên
+    const questions = await this.questionsRepository
+      .createQueryBuilder('question')
+      .select(['question.id', 'question.questionText'])
+      .orderBy('question.id', 'ASC')
+      .limit(9)
+      .getMany()
+
+    // Duyệt qua mỗi câu hỏi để lấy câu trả lời từ bảng PHQ9AnswerQuestions
+    const questionsWithAnswers = await Promise.all(
+      questions.map(async (question) => {
+        // Lấy tất cả câu trả lời của mỗi câu hỏi từ answerQuestionRepository
+        const answers = await this.answerQuestionRepository.find({
+          where: { question: { id: question.id } }
+        })
+
+        return {
+          id: question.id,
+          questionText: question.questionText,
+          answers: answers.map((answer) => {
+            const { id, answerOption, answerText, score } = answer
+            return { id, answerOption, answerText, score }
+          })
+        }
+      })
+    )
+  
+    return questionsWithAnswers;
   }
+  
 
   async getRandomQuestions(): Promise<IGetRandomQuestionResponse[]> {
     // Lấy 9 câu hỏi ngẫu nhiên
