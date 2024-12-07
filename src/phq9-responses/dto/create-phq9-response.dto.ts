@@ -7,10 +7,10 @@ export class CreatePhq9ResponseDto {
   @Min(0)
   userId: number
 
-  @IsInt()
-  @IsNotEmpty()
-  @Min(0)
-  surveyId: number
+  // @IsInt()
+  // @IsNotEmpty()
+  // @Min(0)
+  // surveyId: number
 
   @IsArray()
   @Type(() => AnswerDto)

@@ -8,12 +8,23 @@ import { BaseResponse } from '@/shared/res/base-response'
 export class Phq9ResponsesController {
   constructor(private readonly phq9ResponsesService: Phq9ResponsesService) {}
 
+  // @Post()
+  // async createMultipleResponse(@Body() createPhq9ResponseDto: CreatePhq9ResponseDto): Promise<BaseResponse<null>> {
+  //   await this.phq9ResponsesService.saveMultipleAnswers(createPhq9ResponseDto)
+  //   return new BaseResponse<null>(
+  //     `Create multiple response for surveyId:${createPhq9ResponseDto.surveyId} successfully`
+  //   )
+  // }
+
   @Post()
-  async createMultipleResponse(@Body() createPhq9ResponseDto: CreatePhq9ResponseDto): Promise<BaseResponse<null>> {
-    await this.phq9ResponsesService.saveMultipleAnswers(createPhq9ResponseDto)
+  async createMultipleResponse(
+    @Body() createPhq9ResponseDto: CreatePhq9ResponseDto
+  ): Promise<BaseResponse<null>> {
+    await this.phq9ResponsesService.saveSurveyAndAnswers(createPhq9ResponseDto);
+
     return new BaseResponse<null>(
-      `Create multiple response for surveyId:${createPhq9ResponseDto.surveyId} successfully`
-    )
+      `Create multiple responses for userId:${createPhq9ResponseDto.userId} successfully`
+    );
   }
 
   @Get()
