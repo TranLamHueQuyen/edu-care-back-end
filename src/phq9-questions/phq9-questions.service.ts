@@ -21,13 +21,15 @@ export class Phq9QuestionsService {
   }
 
   async findAll() {
+    // Lấy 9 câu hỏi ngẫu nhiên
     const questions = await this.questionsRepository
       .createQueryBuilder('question')
       .select(['question.id', 'question.questionText'])
       .orderBy('question.id', 'ASC')
       .limit(9)
       .getMany()
-      
+
+    // Duyệt qua mỗi câu hỏi để lấy câu trả lời từ bảng PHQ9AnswerQuestions
     const questionsWithAnswers = await Promise.all(
       questions.map(async (question) => {
         // Lấy tất cả câu trả lời của mỗi câu hỏi từ answerQuestionRepository
